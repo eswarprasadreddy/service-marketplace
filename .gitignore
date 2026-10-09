@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+.env.local
+coverage/
+npm-debug.log*
+backend/target/
+backend/.maven/
+
+backend/.env
+
+backend/.env
