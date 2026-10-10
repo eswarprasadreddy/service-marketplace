@@ -23,7 +23,9 @@ public class AuthInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if (isPublic(request)) return true;
+        // Browsers send OPTIONS before cross-origin JSON requests such as registration.
+        // Let Spring's CORS configuration validate those preflight requests before auth.
+        if (request.getMethod().equals(HttpMethod.OPTIONS.name()) || isPublic(request)) return true;
         String header = request.getHeader("Authorization");
         if (header == null || !header.startsWith("Bearer ")) {
             return unauthorized(response, "Sign in first.");
